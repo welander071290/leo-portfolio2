@@ -54,3 +54,5 @@ fi
 
 echo ""
 echo "LXC succesfully installed and configured for unprivileged containers!"
+
+exit 0
