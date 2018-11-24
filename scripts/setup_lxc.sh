@@ -8,6 +8,11 @@
 # Kristian Klein Jacobsen
 #####################################################
 
+# Update package list
+echo -n "Updating package information... "
+sudo apt-get update > /dev/null
+echo "Done."
+
 # Test if LXC is already installed, otherwise install it
 if dpkg -s lxc > /dev/null 2>&1
 then
@@ -44,25 +49,7 @@ echo "$USER veth lxcbr0 10" | sudo tee /etc/lxc/lxc-usernet > /dev/null
 
 echo "Created ~/.config/lxc/default.conf and /etx/lxc/lxc-usernet."
 
-# Add user to required cgroups
-# https://github.com/NixOS/nixpkgs/issues/25754
-echo -n "Adding current user to required cgroups... "
-
-for d in /sys/fs/cgroup/*; do
-        f=$(basename $d)
-        if [ "$f" = "cpuset" ]; then
-                echo 1 | sudo tee -a $d/cgroup.clone_children > /dev/null;
-        elif [ "$f" = "memory" ]; then
-                echo 1 | sudo tee -a $d/memory.use_hierarchy > /dev/null;
-        fi
-        sudo mkdir -p $d/$USER
-        sudo chown -R $USER $d/$USER
-        echo $$ > $d/$USER/tasks
-done
-
-echo "Done."
-
-# Set up bridge using lxc-net
+# Set up network bridge using lxc-net
 # https://wiki.debian.org/LXC/SimpleBridge
 echo -n "Setting up network bridge using lxc-net... "
 
@@ -86,5 +73,6 @@ sudo systemctl start lxc-net > /dev/null 2>&1
 echo "Done."
 
 echo "LXC succesfully installed and configured for unprivileged containers!"
+echo "Please log out and log back in for changes to take effect."
 
 exit 0
