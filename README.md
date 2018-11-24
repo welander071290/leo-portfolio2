@@ -27,7 +27,7 @@ lxc.network.type = veth
 lxc.network.link = lxcbr0
 ```
 
-Note, the values 100000 and 65536 should match to your user's uid and gid ranges specified in /etc/subuid and /etc/subgid.
+Note, the values 100000 and 65536 should match your user's uid and gid ranges specified in /etc/subuid and /etc/subgid.
 
 Then create the file /etc/lxc/lxc-usernet with the following line:
 
@@ -50,16 +50,16 @@ LXC_DHCP_MAX="253"
 LXC_DHCP_CONFILE=""
 LXC_DOMAIN=""
 ```
-Then start the created lxc-net service:
+Then start the created lxc-net file as a service:
 
 ```
 systemctl enable lxc-net
 systemctl start lxc-net
 ```
 
-Then simply log out and log back in for the changes to take effect. Now it is possible to create unprivileged containers.
+Then simply log out and log back in for the changes to take effect. It should now be possible to create unprivileged containers.
 
-All of the above is done automatically by running the shell script *setup_lxc.sh* in the scripts folder.
+All of the above is done automatically by running the shell script *scripts/setup_lxc.sh*.
 
 ### Web server
 
