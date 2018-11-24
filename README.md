@@ -68,3 +68,5 @@ All of the above is done automatically by running the shell script *scripts/setu
 ### Scripts
 
 ## Files in the repository
+**scripts/setup_lxc.sh**: Script to install and configure LXC for unprivileged containers and set up an independent network bridge
+
