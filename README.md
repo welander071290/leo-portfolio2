@@ -10,7 +10,7 @@ The assignment is to be implemented on a RaspberryPi Zero running the Raspbian S
 
 ## Solution
 
-### Containers
+### Setting up LXC
 Containers are created using LXC (https://linuxcontainers.org/). To install LXC from the official repositories run the following commands:
 
 ```
@@ -60,6 +60,8 @@ systemctl start lxc-net
 Then simply log out and log back in for the changes to take effect. It should now be possible to create unprivileged containers.
 
 All of the above is done automatically by running the shell script *scripts/setup_lxc.sh*.
+
+### Containers
 
 ### Web server
 
