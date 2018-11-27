@@ -15,7 +15,7 @@ read containername
 
 # Checks if a container by this name already exists
 if lxc-ls | grep $containername ; then
-	echo "A ontainer by this name already exists."
+	echo "A container by this name already exists."
 	exit 1
 else
 	echo "Creating container $containername"
