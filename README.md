@@ -87,17 +87,17 @@ You are now ready to start the lighttpd service by writing "rc-update add lightt
 You should now create a file named "index.php" inside /var/www/localhost/htdocs/  
 write "nano /var/www/localhost/htdocs/index.php" and inside the index document write:
 
-"<!DOCTYPE html>"
-"<html><body><pre>"
-"<?php" 
-"$ch = curl_init();" 
-"curl_setopt($ch, CURLOPT_URL, "C2:8080");" 
-"curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);" 
-"$output = curl_exec($ch);"
-"curl_close($ch);"
-"print $output;"
-"?>"
-"</body></html>"
+####<!DOCTYPE html>
+####<html><body><pre>
+####<?php
+####$ch = curl_init(); 
+####curl_setopt($ch, CURLOPT_URL, "C2:8080"); 
+####curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+####$output = curl_exec($ch);
+####curl_close($ch);
+####print $output;
+####?>
+####</body></html>
 
 ### Port forwarding
 
