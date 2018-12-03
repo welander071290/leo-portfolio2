@@ -83,6 +83,7 @@ Now install lighttpd server and som php-packages for the html part.
 write "apk add lighttpd php5 php5-cgi php5-curl php5-fpm" for getting the 5 packages.
 
 Next enable fastcgi protocol by removing the comment (#) sign in /etc/lighttpd/lighttpd.conf
+
 REMEMBER, THIS IS STILL INSIDE THE CONTAINER!
 
 You are now ready to start the lighttpd service by writing "rc-update add lighttpd default" and afterwards "openrc"
