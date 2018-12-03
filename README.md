@@ -66,7 +66,8 @@ All of the above is done automatically by running the shell script *scripts/setu
 After installing LXC, containers can be made. 
 The command "lxc-create -n "container name" -t download --d alpine -r 3.4 -a armhf", is used to create a container, 
 and the container is started afterwards with the command "lxc-start -n "container name"".
-You now have to options. Attach to the container, or stay "outside" the container.
+
+You now have two options. Attach to the container, or stay "outside" the container.
 If you do not attach, the line "lxc-attach -n "container name" --" should be written in front of the next commands.
 To attach just write "lxc-attach -n "container name""
 
@@ -81,27 +82,22 @@ REMEMBER, THIS IS STILL INSIDE THE CONTAINER!
 
 You are now ready to start the lighttpd service by writing "rc-update add lighttpd default" and afterwards "openrc"
 
+### Web server
+
 You should now create a file named "index.php" inside /var/www/localhost/htdocs/  
 write "nano /var/www/localhost/htdocs/index.php" and inside the index document write:
 
-<!DOCTYPE html>
-<html><body><pre>
-<?php 
-// create curl resource
-$ch = curl_init(); 
-// set url 
-curl_setopt($ch, CURLOPT_URL, "C2:8080"); 
-//return the transfer as a string 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-// $output contains the output string 
-$output = curl_exec($ch);
-// close curl resource to free up system resources
-curl_close($ch);
-print $output;
-?>
-</body></html>
-
-### Web server
+"<!DOCTYPE html>"
+"<html><body><pre>"
+"<?php" 
+"$ch = curl_init();" 
+"curl_setopt($ch, CURLOPT_URL, "C2:8080");" 
+"curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);" 
+"$output = curl_exec($ch);"
+"curl_close($ch);"
+"print $output;"
+"?>"
+"</body></html>"
 
 ### Port forwarding
 
