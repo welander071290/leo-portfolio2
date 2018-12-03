@@ -22,7 +22,7 @@ else
 
 	
 # Code for creating container
-	sudo lxc-create -c $containername -t download -- -d alpine -r 3.4 -a armhf
+	sudo lxc-create -n $containername -t download -- -d alpine -r 3.4 -a armhf
 	echo "Starting container..."
 # Start container
 	sudo lxc-start -n $containername
@@ -45,17 +45,38 @@ else
 		exit 1
 	fi
 	
-# Disabling "fastcgi"
-# Gå ind og ret i linje xxx i dokument /etc/lighttpd/lighttpd.conf
-# echo "..." >> /etc/lighttpd/lighttpd.conf
+# Enable "fastcgi" in dokument /etc/lighttpd/lighttpd.conf
+	lxc-attach -n $containername -- sed -i '46i\ include "mod_fastcgi.conf"' /etc/lighttpd/lighttpd.conf
 
 	echo "Starting the lightTPD service"
 # Start the lighttpd service	
-	sudo rc-update add lighttpd default
-	sudo openrc
+	rc-update add lighttpd default
+	openrc
 fi
 
-echo "All done, server rinning"
-exit 0	
+echo "All done, server running"
 	
+echo "Creating /var/www/localhost/htdocs/index.php"
+
+lxc-attach -n $containername -- echo "<!DOCTYPE html>" >> /var/www/localhost/htdocs/index.php 
+lxc-attach -n $containername -- echo "<html><body><pre>" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "<<?php" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "<// create curl resource" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "<$ch = curl_init();" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "// set url" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "<curl_setopt($ch, CURLOPT_URL, "C2:8080");" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "//return the transfer as a string" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "// $output contains the output string" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "$output = curl_exec($ch);" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "// close curl resource to free up system resources" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "curl_close($ch);" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "print $output;" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "?>" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "</body></html>" >> /var/www/localhost/htdocs/index.php
+lxc-attach -n $containername -- echo "<!DOCTYPE html>" >> /var/www/localhost/htdocs/index.php 
+ 
+echo "Done creating /var/www/localhost/htdocs/index.php"
+
+exit 0
 
