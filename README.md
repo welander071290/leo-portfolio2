@@ -71,12 +71,17 @@ You now have two options. Attach to the container, or stay "outside" the contain
 If you do not attach, the line "lxc-attach -n "container name" --" should be written in front of the next commands.
 To attach just write "lxc-attach -n "container name""
 
-If you everforget your container name you can get a list of containers created on you system by writing "lxc-ls"
+If you ever forget your container name, you can get a list of containers created on you system by writing "lxc-ls"
 
-To make the container up to date package list need to be updated, and afterwards you are able to install the necessary software. 
-write "apk update"
+To make the container up to date, package list need to be updated.
+Afterwards you are able to install the necessary software.
+
+Write "apk update"
+
 Now install lighttpd server and som php-packages for the html part.
+
 write "apk add lighttpd php5 php5-cgi php5-curl php5-fpm" for getting the 5 packages.
+
 Next enable fastcgi protocol by removing the comment (#) sign in /etc/lighttpd/lighttpd.conf
 REMEMBER, THIS IS STILL INSIDE THE CONTAINER!
 
