@@ -63,6 +63,44 @@ All of the above is done automatically by running the shell script *scripts/setu
 
 ### Containers
 
+After installing LXC, containers can be made. 
+The command "lxc-create -n "container name" -t download --d alpine -r 3.4 -a armhf", is used to create a container, 
+and the container is started afterwards with the command "lxc-start -n "container name"".
+You now have to options. Attach to the container, or stay "outside" the container.
+If you do not attach, the line "lxc-attach -n "container name" --" should be written in front of the next commands.
+To attach just write "lxc-attach -n "container name""
+
+If you everforget your container name you can get a list of containers created on you system by writing "lxc-ls"
+
+To make the container up to date package list need to be updated, and afterwards you are able to install the necessary software. 
+write "apk update"
+Now install lighttpd server and som php-packages for the html part.
+write "apk add lighttpd php5 php5-cgi php5-curl php5-fpm" for getting the 5 packages.
+Next enable fastcgi protocol by removing the comment (#) sign in /etc/lighttpd/lighttpd.conf
+REMEMBER, THIS IS STILL INSIDE THE CONTAINER!
+
+You are now ready to start the lighttpd service by writing "rc-update add lighttpd default" and afterwards "openrc"
+
+You should now create a file named "index.php" inside /var/www/localhost/htdocs/  
+write "nano /var/www/localhost/htdocs/index.php" and inside the index document write:
+
+<!DOCTYPE html>
+<html><body><pre>
+<?php 
+// create curl resource
+$ch = curl_init(); 
+// set url 
+curl_setopt($ch, CURLOPT_URL, "C2:8080"); 
+//return the transfer as a string 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+// $output contains the output string 
+$output = curl_exec($ch);
+// close curl resource to free up system resources
+curl_close($ch);
+print $output;
+?>
+</body></html>
+
 ### Web server
 
 ### Port forwarding
