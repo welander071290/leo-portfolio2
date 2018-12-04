@@ -42,7 +42,7 @@ else
 	
 	
 # Enable "fastcgi" in dokument /etc/lighttpd/lighttpd.conf
-	lxc-attach -n C1 -- sed -i '46i\ include "mod_fastcgi.conf"' /etc/lighttpd/lighttpd.conf
+	lxc-attach -n C1 -- sed -i -e 's/#   include "mod_fastcgi.conf"/include "mod_fastcgi.conf"/g' /etc/lighttpd/lighttpd.conf
 # Skulle virke
 
 
