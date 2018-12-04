@@ -112,8 +112,13 @@ openrc
 
 ### Web server
 
-You should now create a file named "index.php" inside /var/www/localhost/htdocs/  
-write "nano /var/www/localhost/htdocs/index.php" and inside the index document write:
+You should now create a html ducoment, to be able to communicate between the two containers.
+Create a file named "index.php" inside /var/www/localhost/htdocs/  
+write
+```
+nano /var/www/localhost/htdocs/index.php
+```
+to open up a text-editorm and inside the document write:
 
 ```
 <!DOCTYPE html>
