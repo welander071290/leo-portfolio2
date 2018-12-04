@@ -94,7 +94,16 @@ You should now create a file named "index.php" inside /var/www/localhost/htdocs/
 write "nano /var/www/localhost/htdocs/index.php" and inside the index document write:
 
 &lt;!DOCTYPE html&gt;
-
+&lt;html&gt;&lt;body&gt;&lt;pre&gt;
+&lt;?php 
+$ch = curl_init(); 
+curl_setopt($ch, CURLOPT_URL, "C2:8080"); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+$output = curl_exec($ch);
+curl_close($ch);
+print $output;
+?&gt;
+&lt;/body&gt;&lt;/html&gt;
 
 ### Port forwarding
 
