@@ -62,6 +62,7 @@ Then simply log out and log back in for the changes to take effect. It should no
 All of the above is done automatically by running the shell script *scripts/setup_lxc.sh*.
 
 ### Containers
+To setup containers 
 
 ### Web server
 
@@ -71,4 +72,5 @@ All of the above is done automatically by running the shell script *scripts/setu
 
 ## Files in the repository
 **scripts/setup_lxc.sh**: Script to install and configure LXC for unprivileged containers and set up an independent network bridge
-
+**scripts/setup_C2.sh**: Script to create container 2 and setup a TCP listener on port 8080
+**scripts/random.sh**: Script that returns a random number
