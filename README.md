@@ -93,8 +93,7 @@ You are now ready to start the lighttpd service by writing "rc-update add lightt
 You should now create a file named "index.php" inside /var/www/localhost/htdocs/  
 write "nano /var/www/localhost/htdocs/index.php" and inside the index document write:
 
-//<!DOCTYPE html>
-
+&lt;!DOCTYPE html&gt;
 
 
 ### Port forwarding
