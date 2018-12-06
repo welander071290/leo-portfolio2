@@ -1,4 +1,4 @@
-#!/bin/ba
+#!/bin/ash
 
 #####################################################
 # Bash shell script to generate a random number
