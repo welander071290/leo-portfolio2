@@ -68,8 +68,10 @@ The command
 ```
 "lxc-create -n "container name" -t download --d alpine -r 3.4 -a armhf" 
 ```
-is used to create a container, and the container is started afterwards with the command "lxc-start -n "container name"".
-
+is used to create a container, and the container is started afterwards with the command 
+```
+"lxc-start -n "container name"".
+```
 You now have two options. Attach to the container, or stay "outside" the container.
 If you do not attach, the line 
 ```
@@ -80,9 +82,11 @@ To attach just write
 ```
 lxc-attach -n "container name"
 ```
-If you ever forget your container name, you can get a list of containers created on you system by writing "lxc-ls"
-
-To make the container up to date, package list need to be updated.
+If you ever forget your container name, you can get a list of containers created on you system by writing 
+```
+"lxc-ls"
+```
+To make the container up to date, the package list needs to be updated.
 Afterwards you are able to install the necessary software.
 
 Write 
@@ -95,9 +99,9 @@ write
 ```
 apk add lighttpd php5 php5-cgi php5-curl php5-fpm 
 ```
-for getting the 5 packages.
+for getting the 5 packages needed.
 
-Next enable fastcgi protocol by removing the comment (#) sign in /etc/lighttpd/lighttpd.conf
+Next enable "fastcgi protocol" by removing the comment (#) sign in /etc/lighttpd/lighttpd.conf
 
 REMEMBER, THIS IS STILL INSIDE THE CONTAINER!
 
@@ -118,7 +122,7 @@ write
 ```
 nano /var/www/localhost/htdocs/index.php
 ```
-to open up a text-editorm and inside the document write:
+to open up nano text-editor, and inside the document write:
 
 ```
 <!DOCTYPE html>
@@ -138,7 +142,7 @@ print $output;
 
 "curl_setopt" is used to set the adress of container C2, which is the one we are communicating with.
 
-"curl_exec" is retrieving and printing the URL.
+"curl_exec" is retriewing and printing the URL.
 
 "curl_close" is used to close the cURL afterwards.
 
