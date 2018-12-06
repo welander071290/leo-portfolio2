@@ -73,9 +73,98 @@ $lxc-start -n name_of_container
 $lxc-attach -n name_of_container --apk update
 ´´´
 
+After installing LXC, containers can be made. 
+The command 
+```
+"lxc-create -n "container name" -t download --d alpine -r 3.4 -a armhf" 
+```
+is used to create a container, and the container is started afterwards with the command 
+```
+"lxc-start -n "container name"".
+```
+You now have two options. Attach to the container, or stay "outside" the container.
+If you do not attach, the line 
+```
+lxc-attach -n "container name" --
+```
+should be written in front of the next commands.
+To attach just write 
+```
+lxc-attach -n "container name"
+```
+If you ever forget your container name, you can get a list of containers created on you system by writing 
+```
+"lxc-ls"
+```
+To make the container up to date, the package list needs to be updated.
+Afterwards you are able to install the necessary software.
+
+Write 
+```
+apk update
+```
+Now install lighttpd server and som php-packages for the html part.
+
+write 
+```
+apk add lighttpd php5 php5-cgi php5-curl php5-fpm 
+```
+for getting the 5 packages needed.
+
+Next enable "fastcgi protocol" by removing the comment (#) sign in /etc/lighttpd/lighttpd.conf
+
+REMEMBER, THIS IS STILL INSIDE THE CONTAINER!
+
+You are now ready to start the lighttpd service by writing 
+```
+rc-update add lighttpd default 
+```
+and afterwards 
+```
+openrc
+```
+
 ### Web server
 
+You should now create a html ducoment, to be able to communicate between the two containers.
+Create a file named "index.php" inside /var/www/localhost/htdocs/  
+write
+```
+nano /var/www/localhost/htdocs/index.php
+```
+to open up nano text-editor, and inside the document write:
+
+```
+<!DOCTYPE html>
+<html><body><pre>
+<?php 
+$ch = curl_init(); 
+curl_setopt($ch, CURLOPT_URL, "C2:8080"); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+$output = curl_exec($ch);
+curl_close($ch);
+print $output;
+?>
+</body></html>
+```
+
+"curl_init" is used to initialize cURL for transfering data from or to a server.
+
+"curl_setopt" is used to set the adress of container C2, which is the one we are communicating with.
+
+"curl_exec" is retriewing and printing the URL.
+
+"curl_close" is used to close the cURL afterwards.
+
+
 ### Port forwarding
+To make web server in container C1 available to the outside, we're using the built-in firewall utility *iptables* to forward all requests on port 80 of the host to port 80 of C1:
+
+```
+sudo iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j DNAT --to 10.0.3.11:80
+```
+
+This is done automatically when running the portfolio2.sh script.
 
 ### Scripts
 The random script contains the following command
@@ -94,6 +183,7 @@ All this is piped over to od, which convert the input to a specified output.
 -t u4; is the format, in this case i is unsigned decimal 4-byte units.
 
 ## Files in the repository
+**scripts/portfolio2.sh**: Script that starts the containers, forwards port 80 from the host to C1 and serves the random-script on port 8080 on C2.
 **scripts/setup_lxc.sh**: Script to install and configure LXC for unprivileged containers and set up an independent network bridge
 **scripts/setup_C2.sh**: Script to create container 2 and setup a TCP listener on port 8080
 **scripts/random.sh**: Script that returns a random number
