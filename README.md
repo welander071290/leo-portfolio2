@@ -173,17 +173,26 @@ The random script contains the following command
 dd if=/dev/random bs=4 count=1 status=none | od -A none -t u4
 ```
 dd; is a 'convert and copy' command. it's primarily used to copy files to devices, such as a usb-stick.
+
 if; specifie where to copy the file from, in this case it copies the number random.
+
 bs; is the block size in BYTES.
+
 count; is how many blocks is copies.
+
 status=none; displays only error messages.
 
 All this is piped over to od, which convert the input to a specified output.
+
 -A none; decide how file offsets are printed, it is not specified further.
+
 -t u4; is the format, in this case i is unsigned decimal 4-byte units.
 
 ## Files in the repository
 **scripts/portfolio2.sh**: Script that starts the containers, forwards port 80 from the host to C1 and serves the random-script on port 8080 on C2.
+
 **scripts/setup_lxc.sh**: Script to install and configure LXC for unprivileged containers and set up an independent network bridge
+
 **scripts/setup_C2.sh**: Script to create container 2 and setup a TCP listener on port 8080
+
 **scripts/random.sh**: Script that returns a random number
