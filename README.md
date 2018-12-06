@@ -62,13 +62,36 @@ Then simply log out and log back in for the changes to take effect. It should no
 All of the above is done automatically by running the shell script *scripts/setup_lxc.sh*.
 
 ### Containers
-To setup containers 
+To setup containers LXC is used, as mentioned above. 
+´´´
+$lxc-create -n name_of_container -t download -- -d alpine -r 3.4 -a armhf
+´´´
+What this line of code does, is creating the container. -t download is a template where the linux version is specified via the template options. Which i this case is the alpine version off linux with the version and the processor architecture also selected in the options.
+When the container is created, we start it and goes in to the container to update the packages and install the nessesary programs.
+´´´
+$lxc-start -n name_of_container
+$lxc-attach -n name_of_container --apk update
+´´´
 
 ### Web server
 
 ### Port forwarding
 
 ### Scripts
+The random script contains the following command
+
+´´´
+dd if=/dev/random bs=4 count=1 status=none | od -A none -t u4
+´´´
+dd; is a 'convert and copy' command. it's primarily used to copy files to devices, such as a usb-stick.
+if; specifie where to copy the file from, in this case it copies the number random.
+bs; is the block size in BYTES.
+count; is how many blocks is copies.
+status=none; displays only error messages.
+
+All this is piped over to od, which convert the input to a specified output.
+-A none; decide how file offsets are printed, it is not specified further.
+-t u4; is the format, in this case i is unsigned decimal 4-byte units.
 
 ## Files in the repository
 **scripts/setup_lxc.sh**: Script to install and configure LXC for unprivileged containers and set up an independent network bridge

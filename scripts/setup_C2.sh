@@ -18,6 +18,8 @@ fi
 lxc-attach -n C2 --
 echo "You are now working inside the container"
 apk update
+apk add socat
+
 
 lxc-attach -n C2 -- socat -v -v tcp-listen:8080,fork,reuseaddr exec:/bin/random.sh
 

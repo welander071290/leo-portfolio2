@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/ba
 
 #####################################################
 # Bash shell script to generate a random number
@@ -7,6 +7,5 @@
 # Anders Welander
 #####################################################
 
-dd if=/dev/random bs=4 count=16 status=none | od -A none -t u4
-
+dd if=/dev/random bs=4 count=1 status=none | od -A none -t u4
 
