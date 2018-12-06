@@ -144,9 +144,17 @@ print $output;
 
 
 ### Port forwarding
+To make web server in container C1 available to the outside, we're using the built-in firewall utility *iptables* to forward all requests on port 80 of the host to port 80 of C1:
+
+```
+sudo iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j DNAT --to 10.0.3.11:80
+```
+
+This is done automatically when running the portfolio2.sh script.
 
 ### Scripts
 
 ## Files in the repository
+**scripts/portfolio2.sh**: Script that starts the containers, forwards port 80 from the host to C1 and serves the random-script on port 8080 on C2.
 **scripts/setup_lxc.sh**: Script to install and configure LXC for unprivileged containers and set up an independent network bridge
 
